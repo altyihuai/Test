@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--创建模板-->
+<div id="app">
+    <button v-on:click.ctrl="onClick">A</button>
+
+    <!-- 插值渲染数据 -->
+    <!-- <h3>{{msg}}</h3> -->
+
+    <!--拼接字符串-->
+    <!-- <h3>{{msg+"拼接"}}</h3> -->
+
+    <!--数学运算-->
+    <!-- <h3>{{num+sun}}</h3> -->
+
+    <!--调用系统方法-->
+    <!-- <h3>{{msg.toLocaleUpperCase()}}</h3> -->
+
+    <!--调用自定义方法-->
+    <!-- <h3>{{reverse(msg)}}</h3> -->
+
+    <!--三元运算符-->
+    <!-- <h3>{{sun>18?"成年":"未成年"}}</h3>
+
+    <h1>{{<h2>hello</h2>}}</h1>
+
+    <h2>{{reverse(msg)}}</h2> -->
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+<script>
+    let sun=new Vue({
+        el:"#app",
+        data:{
+            msg:"Hello Vue",
+            num:10,
+            sun:20,
+        },
+        methods:{
+            //实现字符串反转功能
+            reverse(str){
+                return str.split("").reverse().join("")
+            },
+            onClick(){
+                console.log('abc')
+            }
+        }
+    })
+</script>
+</body>
+</html>

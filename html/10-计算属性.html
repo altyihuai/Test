@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+<style>
+    table{
+        width: 400px;
+        height: 300px;
+    }
+    thead{
+        height: 60px;
+        line-height: 60px;
+        background: #EEE;
+    }
+    table,td{
+        border:1px solid #ddd;
+        border-collapse: collapse;
+        text-align: center;
+    }
+</style>
+
+<div id="app">
+    <table>
+        <thead>
+        <tr>
+            <th>商品名称</th>
+            <th>商品单价</th>
+            <th>商品数量</th>
+            <th>商品小计</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="item in cartList" :key="item.id">
+            <td>{{item.name}}</td>
+            <td>{{item.price}}</td>
+            <td>{{item.num}}</td>
+            <td>{{item.num * item.price}}</td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                商品总价(计算属性):{{sun}}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                商品总价(普通方法):{{cartPrice()}}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <button @click="this.add">添加商品</button>
+                <button @click="this.del">减少商品</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    new Vue({
+        el: '#app',
+
+        //商品数据
+        data: {
+            cartList: [
+                {
+                    id: 3,
+                    name: 'Iphone-12',
+                    price: 12999,
+                    num: 2
+                },
+                {
+                    id: 2,
+                    name: '华为-mate40',
+                    price: 8000,
+                    num: 3
+                },
+                {
+                    id: 1,
+                    name: '小米-12',
+                    price: 5000,
+                    num: 8
+                }
+            ]
+        },
+
+        //普通方法
+        methods: {
+            cartPrice() {
+                //创建一个空变量接受总价格
+                let total = 0;
+                this.cartList.forEach(item => {
+                    total += item.price * item.num;
+                });
+                return total;
+            },
+
+            // 添加商品
+            add(){
+                let obj={
+                    id: this.cartList.length>=1?this.cartList[0].id+1:1,
+                    name: '小米-12',
+                    price: 5000,
+                    num: 8
+                }
+                this.cartList.unshift(obj)
+            },
+
+            // 删除商品
+            del(){
+                this.cartList.splice(this.cartList.length-1,1)
+            },
+
+        },
+
+        //计算属性计算商品总价
+        computed: {
+           sun(){
+               var tab=null;
+               this.cartList.forEach(item=>{
+                   tab += item.price*item.num
+               })
+               return tab
+           }
+        }
+    });
+</script>
+</body>
+</html>
