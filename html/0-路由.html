@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+js库和js框架的区别
+    库其实就是某个功能的封装,小而,对项目入侵性不大
+    框架大而全,对于问题有着一整套的解决方法,甚至是项目结构,对项目的入侵性较大
+
+vue的特点:
+    vue简单容易上手
+    数据驱动视图更新(不建议直接操作dom)
+    响应式数据
+    基于组件化进行开发
+
+vue的实例对象
+    每个vue程序的核心都是vue的根实例,vue.js是通过构造函数的方法去创建vue实例的
+    vue构造函数的参数
+    el:挂载元素,用来绑定一个dom元素的
+    data:装载数据
+    methods: 方法1
+    template: 模板
+
+vue插值表达式
+    支持的语法:
+        直接输出变量
+        字符串拼接
+        简单数学运算
+        可以调用自定义函数
+        可以调用系统函数
+        三元表达式
+    特点:
+        不能解析带有标签的字符串,也就是富文本,会原样输出
+        不能卸载属性部分,只能出现在内容区域
+
+指令介绍
+    指令是vue提供的一种特殊模板语法,其本质就是一种特殊的函数
+
+常用指令有:
+    v-html,v-text,v-bind,v-on,v-once,v-if,v-show,v-model,v-for
+    
+    v-html和v-text的共同点:
+        都是在模块中输出数据
+        支持的语法
+            直接输出变量
+            简单的数学运算
+            三元表达式
+            字符串拼接
+            调用系统方法
+            调用自定义函数
+    v-html和v-text的区别
+        v-html可以解析带有标签的字符串
+        v-text不能解析带有标签的字符串
+    
+    v-bind:
+        作用: 动态绑定属性值,当有属性值为变量时可以使用动态绑定
+        简写: 把v-bind去掉只保留冒号(:)
+    []:从2.6.0开始,可以使用一个方括号把一个变量括起来,当做属性的名
+    
+    v-show和v-if的共同点:
+        都是控制元素显示隐藏
+        共同的参数:
+            true是显示
+            false是隐藏
+            支持三元表达式
+    v-show和v-if的不同点
+        v-show实现显示隐藏的方式是通过操作dom的样式dispaly去实现的
+        v-show用于经常切换状态的场景,比如开关按钮
+        v-if实现隐藏的方式是直接销毁dom
+        v-if用于不频繁切换状态的场景,比如广告
+    v-if的组合指令:
+        v-else-if:
+            有条件判断,必须跟v-if配合使用
+        v-else
+            没有条件判断,必须跟v-if配合使用
+
+    v-on:
+        作用: 注册事件
+        简写: 把v-on:换成@
+    
+    v-once:
+        作用: 控制dom只编译一次,编译一次之后,后面的数据更新也不会驱动该dom更新
+    
+    v-for:
+        作用: 渲染列表
+        格式: v-for="itme in list"
+            itme: 每一项
+            in: 关键字
+            list: 被遍历的数组
+
+    v-if和v-for在同一个标签的问题:
+        因为v-for的优先级比v-if的高,所以会先把v-for执行一遍,遍历出来的每一项都会被v-if判断一次,
+        会造成多次无用的dom渲染,浪费性能
+    
+    key属性:
+        作用: 在数据层和视图层建立一一对应的关系,方便局部更新和状态保持
+        要求: 必须唯一不重复
+        使用: 当所有的标签都没有key值的时候,复选框勾选的就是元素下标,当有key值的时候,勾选的就是
+                key值,元素下标会随着元素数量的变化而变化,而key值不会变化
+    
+动态绑定style:
+    动态设置一个行内样式,:style='样式'
+    动态设置多个行内样式,:style='样式,样式'
+    动态绑定设置好的样式,:style='{样式名}'
+    动态绑定设置好的多个样式,:style='[样式名,样式名]'
+动态绑定clss:
+    动态绑定一个,:class='class名'
+    动态绑定多个.:class='class名 class名'
+    class名可以通过设置属性为false来取消绑定
+
+
+事件绑定:
+    v-on注册事件
+    vue中如果不需要传递参数,可以不写()
+    不写()的时候系统会自动传递参数event
+    如果写了()那就必须手动添加参数进去
+
+    常见的事件有: 
+        blur:失焦事件
+        click:点击事件
+
+事件修饰符:
+    作用: 只能修饰事件,事件被修饰后触发条件会被改变
+
+    stop: 阻止事件冒泡,给触发冒泡事件的子元素添加
+    prevent: 阻止默认行为,比如a标签的跳转行为
+    capture: 将事件的执行顺序转换为捕获模式,给父元素的事件添加
+    self: 将事件设置为只能自己触发,冒泡和捕获都不会触发他这个事件,给有需要的元素添加
+    passive: 立即执行滚动事件,滚动事件默认执行是有一定的延迟的
+    once: 设置该事件只能被触发一次,与其他的事件修饰符不同的是,这个修饰符可以被组件直接使用
+    native: 如果直接个自定义组件添加click事件,点击不会触发事件的,这是因为自定义组件没有这个事件,
+            native的作用是在父组件中给子组件添加一个原生的dom事件,可以将这个自定义组件当做普通
+            HTML标签来看    
+
+
+按键修饰符:
+    修饰键盘事件,限制键盘事件的触发条件
+    比如: tab,deleter,up,down,left,right,esc,space
+自定义按键修饰符
+    Vue.config.keycodes.自定义名称=编码值
+系统修饰符
+    可以使用以下的修饰符来控制元素只有按下才能出发其他的鼠标或者键盘事件
+    ctrl,shift,alt,meta
+    meta在不同的操作系统中对应着不同的按键,比如window系统对应的就是窗口图标的按键
+    mac系统对应的就是command按键
+exact精准控件按键触发事件
+    当你定义了一个事件 @keyup.ctrl.click 这时候你会发现按住ctrl和alt再按点击也是可以触发的
+    如果你只想按住ctrl再点击才能触发的话可以在后面加exact事件 
+鼠标按键修饰符:
+    left:左键
+    right: 右键
+    middle: 中键
+
+
+双向数据绑定
+    v-model
+    作用: 将表单元素与数据层绑定起来,实现表单元素和数据层的同步更新
+    v-model一般只能和表单元素结合使用
+表单修饰符:
+    对表单元素的内容进行预处理
+    一般和v-model结合使用
+    trim: 去除表单前后的空格
+    lazy: 将自动同步的时间延迟到失去焦点
+    number: 将表单元素的内容自动转化为数字类型,如果输入的不是一个数值的字符串就不做处理
+v-model可以实现在子组件中的表单样式同步到父组件
+vue.$set()
+    解决通过下标修改元素或者添加2元素视图不更新的问题
+    解决动态给对象添加属性,视图不更新的问题
+    格式: vue.$set('数组名称','下标','数组元素')    
+vm.$forceUpdata()
+    作用: 用于强制更新视图
+
+vue.nextTick()
+    在下次dom更新循环结束之后执行的延时回调,在修改数据之后立即执行,可以获得最新的数据
+
+
+vue生命周期
+    就是vue实例从创建、挂载、运行到销毁的整个过程
+vue生命周期钩子函数
+    就是vue实例从创建、挂载、运行到销毁不同阶段产生的一系列自动执行的钩子函数的统称
+
+    beforcreate：创建前
+        数据和方法都还没创建，方法和数据处于不可用状态
+    created:创建后
+        数据和方法都已经创建完成了
+        视图还没完成编译
+    beforMonunt:挂载前
+        还没有完成视图的挂载
+    monunted:挂载后
+        已经完成了视图的挂载
+    创建阶段都是自动执行,只执行一次
+    beforUpdate:运行前
+        当有和视图绑定的数据发生变化时自动触发
+        视图还没有完成更新
+        没有和视图绑定的数据变化了也不会触发
+    Updataed:运行后
+        和运行前的唯一的区别在于
+        视图完成了更新
+    befordestroy:销毁前
+        只执行一次
+    destroyed:
+        只执行一次
+
+
+MVVM模式
+    M: 数据层
+    V: 视图层
+    VM: 视图模型层,链接视图层和数据层
+    
+watch侦听器
+    watch侦听器可以监听data中的数据变化,在这里被监听的数据名当做函数名,里面有两个参数
+    一个是新值一个是旧值
+    watch属性值:
+    handler: 一个回调函数,当侦听的数据发生变化时会自动改变
+    deep: 当属性值为true是开启深度监听器,普通侦听器不能监听数据和对象的变化,深度侦听器可以
+    immediate: 当属性为true时,会立即触发handler这个方法,也就是在浏览器刷新时就会触发
+        此时新值为undefined,旧值就是默认的值,如果为false就不会在浏览器刷新时触发handler
+    格式:
+        watch:{
+            数据名:{
+                handel(新值,旧值){
+                    函数
+                }
+            }
+        }
+    本质就是一个特殊函数
+    作用: 可以监听data中的数据变化,执行一些特殊业务
+    注意: 不能频繁使用侦听器,会造成性能消耗
+    特点: 不需要手动调用,数据改变自动调用
+
+   
+        
+    watch与计算属性的区别
+        watch只能侦听data中数据的变化,computed没有这个限制
+        watch可以异步执行,computed不可以
+        computed是通过return返回的,可以包含大量的逻辑运算,不修改原始数据
+        
+        当数据改变时,需要执行大量的操作或者异步执行时,可以选择watch侦听器
+
+计算属性:
+    本质:特殊函数,当做数据来调用,使用时可以不加()
+    触发: 当计算属性中参与计算的属性发生改变时可以自动触发这个事件
+    特点:
+        都是只读属性
+        计算属性内部必须有返回值
+        计算属性中的值不可以和data中的数据同名
+        可以根据data中的数据计算出一个不存在的数据
+    
+    每个计算属性内部都有get和set的方法,获取数据时调用get方法,获取数据时调用set方法
+    计算属性和普通方法的区别:计算属性有缓存机制
+
+
+过滤器:
+    本质: 特殊的函数
+    作用: 对即将在视图中输出的数据进行预处理
+    特点: 
+        过滤器的方法必须有返回值
+        有一个内置参数,就是即将被处理的数据
+        过滤器中不可以使用this访问vue失礼了
+    使用位置:
+        在插值表达式中
+        v-bind中
+
+    私有过滤器格式:
+        filters:{
+            方法名(内置函数){
+                函数
+            }
+        }
+    全局过滤器格式:
+        Vue.filter('方法名',function(内置函数){
+            执行函数
+        })
+    全局过滤器和私有过滤器的区别:
+        全局过滤器可以在每个vue实例中使用
+        私有过滤器只可以在写的那个vue实例中使用
+
+Vue组件:
+    组件介绍:
+        组件就是一些常用功能的封装,页面板块的封装
+        调用方式: 当做自定义组件封装
+    组成部分:
+        视图: HTML
+        样式: CSS
+        逻辑: JS
+
+        注意: 组件化后data就不能是对象了,取而代之的是一个函数,使用返回对象的方式返回数据,这是为了
+            避免组件被多次调用后引起的数据混乱
+    组件的命名:
+        当组件的命名为全部小写时可以原样调用
+        当组件使用驼峰命名时,单词之间用-链接
+    组件的使用:
+        创建组件模板
+        注册组件
+        当做自定义组件调用
+    注册组件
+        全局注册组件: Vue.component(被调用时组件名:组件名) 可以在所有vue实例中使用
+        私有组件注册: components:{被调用是的组件名:组件名} 只能在当前的vue实例中使用
+        
+动态组件components:
+    compponents是vue内置的组件,作用是动态渲染组件
+    属性:  is: 指定渲染的组件名称
+    格式: <component is="组件名称"></component>
+
+keep-alive组件
+    keep-alive组件是系统内置组件,主要作用是缓存组件,减少性能消耗
+    使用方法: 用keep-alive组件包裹住需要缓存的组件
+    独有的钩子函数
+        activated: 在组件激活的时候自动触发
+        deactivated: 在组件失活的时候自动触发
+
+异步组件:
+    异步组件的作用就是在不显示该组件时浏览器中的network不会下载该组件的资源,普通组件时不管显示
+    与否都会下载组件的资源
+    异步组件格式: let 被调用时组件名 = ()=>import(组件路径)
+    异步组件类似路由的懒加载
+
+.sync修饰符
+    在vue2中,一个组件只能定义一个v-model,如果其他的prop也要传递参数怎么办呢,
+    可以在子组件中向父组件传递参数
+    .sync的作用呢就是可以让父组件在接收时可以直接使用,不需要再注册事件了
+    .sync在vue3中已经废弃了,因为vue3的v-model可以实现多个prop双向绑定了
+组件冲突
+    一个组件可以被多个组件调用,这样子有可能引起样式冲突
+    解决方法:
+    scoped: 在style标签中加scoped后会把原始的类选择器改写成交集选择器
+    module: 
+        在style标签中加modules后会在每一个类赋值一个全局唯一的类,这样组件之间就不会互相影响了
+        css Modules 运行我们自定义这个类名
+            先在标签中写 :class='类名1.类名2'
+            在style中写 modules='类名1'
+
+访问实例对象:
+    $root: 每个vue实例都可以通过$root访问main.js中定义的方法
+    $parent: 子组件中可以通过$parent访问父组件中的数据  
+
+mixin的概念
+    用来分发可复用的功能,一个mixin组件可以包含任意组件选项,一点kmixin对象被组件使用,
+    mixin对象中的所有选项都会被混入进该组件中
+    混入的冲突: 当mixin混入有于组件同名选项时,会以递归的方式合并,以组件数据优先
+
+    mixin也可以全局混入,不过一旦全局混入,会影响后面创建的每一个组件
+
+组件通信:
+    父组件向子组件传递信息:
+        父组件使用自定义属性传递
+        子组件使用props接收
+    子组件向父组件传递信息:
+        子组件通过 this.$emit传递
+        父组件通过自定义函数接收
+    同级组件传递信息:
+        创建一个中转文件,里面新建一个vue实例,导出vue实例,这里我命名为vm
+        传递信息的组件通过vm.$emit传递
+        接受信息的组件通过vm.$on接收
+    
+ref属性:
+    ref可以帮助我们间接操作dom
+    使用方法:
+        在组件中写入 :ref='ref名字'
+        可以使用 this.$refs.ref名字 获取元素对象
+        如果绑定的是组件,那么获取的就是组件对象
+        可以通过 this.$refs.ref名字.$el 获取组件视图
+    
+插槽:
+    插槽也是实现组件外部向内部传递信息
+    匿名插槽
+        当你有一块内容结构希望由调用者决定时你可以使用匿名插槽
+        定义匿名插槽:
+            在组件中使用 slot 标签即可,这里的slot就是一个占位符,调用者写入内容是展示在slot标签中
+    具名插槽:
+        当你有多块内容结构希望由调用者决定时可以使用具名插槽
+        定义具名插槽:
+            在slot标签中添加name属性即可,这里的那么属性就是为了区分不同插槽而已
+        使用具名插槽:
+            div + slot方法: 
+                格式: <div slot="name名"></div>
+                特点: 使用div + slot方法调用的时候会产生一个h1标签包裹住插槽内容
+            template+slot方法:
+                格式: <template slot="name名"></template>
+                特点: 使用这种方法调用的时候不会产生多余标签
+            template#简写方法:      
+                格式: <template #name名></template>
+                特点: 当该具名插槽被多次调用且有一次是template#简写的方式时,#简写会把所有的调用都覆盖掉
+                    如果有多次#简写的方法,后写的覆盖前写的
+    作用域插槽:
+        当你想在调用的时候使用插槽中的数据时,你可以使用作用域插槽
+        定义: <slot :数据名="数据"></slot> 插槽传递数据
+            v-slot:插槽名  绑定插槽
+            v-slot="数据名"  获取数据
+            v-slot="$自定义名" 获取所有插槽的数据
+
+路由: 
+    作用: 维护页面访问地址和对应组件关系,在页面访问地址和对应组件之间建立一一对应关系
+    router-link:
+        创建路由组件,默认为a标签
+        属性:
+            to: 指定页面访问地址
+            tag: 指定路由组件生成标签,必须有to属性,tag才生效
+    router-view: 路由占位符,指定页面访问地址匹配到的组件渲染位置
+    路由模式:
+        使用mode改变路由模式
+        属性:
+            hash: 页面访问带#,可以脱离web服务器进行工作
+            history: 页面访问不带#,必须依赖web服务器才能正常运行
+    路由导航高亮:
+        router-link创建的路由组件默认有一个router-link-active的高亮属性
+        我们可以通过 linkAtiveClass 来改变这个类名
+    初始化访问路径: redirect 可以指定自动跳转路径
+    配置404页面: 
+        路由规则中的pat为*号时,其他规则全都匹配不到时匹配该规则
+    路由匹配模式:
+        路由匹配模式默认为模糊匹配,也就是说如果只有一个/那就匹配所有带/的规则
+        我们可以在router-link组件中添加exact 来开启严格匹配模式
+    命名路由: 
+        在路由规则中可以使用name来定义一个路由名字
+        在route-link的to属性中可以使用路由名字来匹配页面访问地址
+   
+    路由元信息:
+        关键字: meta
+        在路由规则定义meta后可以通过this.$route.meta数据来调用meta的数据
+
+    this.$route: 存储路由相关的数据
+    this.$router: 存储路由相关的方法
+
+    命名视图
+        应用场景: 实现一个路由访问多个路径
+        配置路由规则,实现一个路由配置多个组件
+        router-view中用name属性指定视图命名
+        格式:
+            {
+                path:'/index',
+                components:{
+                    default: Index,
+                    自定义名称: 自定义组件
+                }
+            }
+-------       编程式导航就是使用js+方法的模式去实现路由跳转
+        方法:
+            push: 路由跳转,在浏览器会增加一条访问记录
+            replace: 路由跳转,会覆盖上一条访问记录
+            go: 实现路由前进后退,参数为正时前进,参数为负就后退
+            forward: 前进
+            back: 后退
+    
+    动态路由: 
+        格式: 路径后面 :id 来配置动态路由
+        动态路由可以传递参数
+            路由写法: {
+                path: './index/:name/:id'
+            }
+            router-link传递参数在页面访问地址后面直接加参数:
+                <router-link to="./index/张三/1"></router-link>
+            页面获取参数用this.$route.params
+                <h1>{{this.$route.params.id}}</h1>
+        字符串实现路由传参(可以与动态路由共存)
+            在页面访问地址后面用? 隔开传递参数即可,参数与参数之间用&隔开
+                <router-link to="./index?name=张三&id=1"> </router-link>
+            接收时用$route.query接收
+                <h1>{{$route.query.name + $route.query.id}}</h1>
+    动态添加路由规则
+        addRouter是路由模块下的一个方法
+        可以在路由规则外面动态添加路由
+    嵌套路由
+        可以使用children来嵌套路由
+        写法:{
+            path:'./index',
+            component: Index,
+            children:[
+                {
+                    path:'index/children1'
+                    component: Children,
+                },
+            ]
+        }
+    hash路由模式实现原理:
+        当URL片段标识符发生改变的时候会触发hashchange事件(跟在符号#号后面的,包括#)
+        hashchange:监听锚点字符串的变化
+    路由懒加载
+        按需加载路由组件
+        提高项目性能
+        格式:
+            let 组件名 = ()=>import(组件路径)
+    路由守卫
+        所有守卫和钩子的参数解析
+            to: 代表即将前往的页面对应的路由对象
+            from: 代表即将离开的页面对应的路由对象
+            next: 跳转方法,可以接收一个路径字符串或路由对象作为参数,如果没有传递参数,那么执行默认的页面跳转
+            参数都是系统自动传参的,可以自定义名字但是不可以改变他们的位置
+        beforeEach全局前置导航守卫
+            具备拦截功能
+            在页面跳转之前自动执行
+            注意: 全局前置导航守卫必须要有 next方法,如果没有就会被拦截在当前页面
+        afterEach 全局后置钩子
+            不具备拦截功能
+            在页面跳转后自动执行
+            钩子没有next参数也不会改变导航本身
+
+        beforeEnter路由独享守卫
+            不是实例下的方法,直接写在路由规则内
+            特点:
+                具备拦截功能
+                只能对一条路由生效
+                页面跳转之前自动执行
+        组件内的导航守卫
+            写在组件内,对该组件生效
+            方法:
+                beforeRouterEnter: 进入组件之前自动执行(此时还不能使用this组件对象)
+                beforeRouterUpdate: 组件被复用时自动执行(动态参数改变也会触发)
+                beforeRouterLeave: 离开组件时自动触发
+        
+    重置浏览器滚动条的位置
+        scrollBehavior(){
+            return {y:0,x:0}
+        }
+
+    
+axios介绍:
+    axios是一个第三方http库
+    axios的底层基于ES6的promise
+    axios的底层基于XMLHttpRequest异步对象
+    axios的主要作用是实现ajax的请求获取数据
+    axios的参数
+        url: 设置请求路径
+        methods: 设置请求方式
+        params: 请求数据
+        data: 请求数据
+        headers: 设置请求头
+        then: 请求成功返回的函数
+        catch: 请求失败返回的函数
+
+    请求方式的类型:
+        get: 通常用于获取数据
+        delete: 删除
+        put: 添加
+        post: 发送参数
+        获取数据的格式:
+            get和delete设置参数用params
+            put和post设置参数用data,可以简写成用一个大括号把数据包裹起来
+    axios的全局配置
+        全局配置基础域名:
+            当所有请求都是以 http://localhost:3030开头时可以配置一个全局基础域名,这样调用的时候就不用
+            加这段了
+            格式: axios.default.baseURL='http://localhost:3030'
+        全局配置请求头:
+            格式: axios.default.headers.请求头='请求头'
+    拦截器
+        会拦截每一次数据请求,或进行统一配置
+        axios.interceptors.request.use=(function(request){
+            request.default.authorization='请求头'
+            return request // 必须返回,不然请求发送不出去
+        })
+    响应拦截器
+        会拦截每一次服务器的响应
+        axios.interceptors.reponse.use(function(reponse){
+            return reponse.data
+        })
+    开发环境判断
+        process.evn.NODE_EVN: vue脚手架自带,作用是判断是开发环境还是线上环境
+        development: 默认环境,开发环境
+        production: 线上环境
+        if(provess.env.NODE_ENV==development){
+            axios.defaults.baseURL = '/api';
+        }else if(procsss.env.NODE_ENV==production){
+            axios.defaults.baseURL = 'http://localhost:3000/api'
+        }
+    将axios挂载到vue原型中
+        格式: Vue.prototype.$axios=axios
+    axios.create()方法
+        作用: 创建一个axios实例对象,可以在这个对象中配置一些基础域名
+        const axios = axios.create({
+            axios.default.base.URL = 'http://localhost:3030'
+        })
+    axios.all()
+        作用: 可以批量请求数据
+        只可以被axios调用,axios.create方法创建的方法不能调用该方法
+    
+    跨域问题:
+        跨域问题就是浏览器对js的一种限制【同源策略】
+        同源策略: 协议、域名、端口都必须完全一样才行
+
+        解决跨域问题:
+            1-jsonp: 这是民间提出的一种想法
+                先创建一个接收数据的全局函数
+                在script标签中的src属性发送请求
+                服务端收到请求返回数据
+                客户端收到数据执行回调
+                特点: 
+                    只能使用get请求
+                    不存在跨域问题
+                    是同步请求
+            2-cors
+                将请求头设置为 * 号
+            3-重写api
+                在开发阶段,我们可以将api设置为空
+
+vuex
+    vuex是基于vue框架的一个集中式的状态管理工具
+    vuex的状态数据
+        state: 存储数据
+        mutations: 存储同步方法
+        actions: 存储异步方法
+        getters: 类似于vue的技术属性
+        modules: 根据功能将子组件进行分组管理
+
+    数据存储对象$store对象
+        this.$store.state 获取state中定义的数据
+        this.$store.getter 获取计算属性
+        this.$store.commit('同步方法名称','额外参数')
+        this.$store.dispatch('异步方法名称','额外参数')
+    
+    vuex辅助函数
+        当调用vuex数据或方法时会出现大量的this.$store,这个问题可以使用辅助函数来解决
+        辅助函数:
+            mapState: 将vuex中维护的state数据映射到组件中
+            mapGetter: 将vuex中维护的getters数据映射到组件中
+            mapMutation: 将vuex中维护的mutations同步方法映射到组件中
+            mapAction: 将vuex中维护的actions异步方法映射到组件中
+            state和getter数据映射到computed中
+            mutations和actions的方法映射到methods中
+            所有的映射都建议使用拓展运算符来解决冲突
+            导入辅助函数:
+                按需导入: import {mapSate} form 'vuex'
+                全部导入: import vuex form vuex
+    子模块:
+        当项目较大的时候,所有的状态都放在一个store会显得有些臃肿
+        所以vuex允许将store分隔成一个个子模块,所有的子模块都有自己的state,mutation等
+        甚至是嵌套子模块,从上至下的分隔
+        
+        namespaced表示当前模块是否开启命名空间,定义了namespaced的模块和其他模块分开来
+        调用时需要指定模块名后才能访问到
+
+        在使用子模块时,用modules注册子模块
+        子模块导入数据:
+            导入state数据: ...mapState(数据名: state=>state.组件名.数据名)
+            导入getter: ...mapGetter('子模块名',['计算属性'])
+            导入同步方法: ...mapMutation('子模块名',['方法名'])
+            导入同步方法: ...mapAction('子模块名',['方法名'])
+
+        
+
+
+    
+
+        
+
+
+            
+
+
+
+        
+
+
+
+
+</body>
+</html>

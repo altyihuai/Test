@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            width: 1200px;
+            margin: auto;
+            text-align: center;
+        }
+        h1{
+            height: 20px;
+            font-size: 20px;
+        }
+        button{
+            width: 100px;
+            text-align: center;
+            line-height: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>这次背这个</h1>
+        <h1>    </h1>
+        <button>抽背</button>
+    </div>
+    <script>
+        var h1 = document.getElementsByTagName('h1')[1]
+        var btn = document.getElementsByTagName('button')[0]
+        var arr = ['js库和js框架的区别','vue的特点','vue的实例对象','vue插值表达式','指令介绍',
+    '动态绑定样式','事件绑定','事件修饰符','按键修饰符','双向数据绑定','表单修饰符','视图不更新问题',
+    'nextTick','vue生命周期','MVVM模式','watch侦听器','watch与计算属性的区别','计算属性','过滤器',
+    'Vue组件','动态组件components','keep-alive组件','异步组件','sync修饰符','组件冲突','访问实例对象',
+    'mixin的概念','组件通信','插槽','路由','ref','编程式导航','动态路由','hash路由模式实现原理','路由守卫',
+    '重置浏览器滚动条的位置','axios介绍','请求方式的类型','拦截器','开发环境判断','将axios挂载到vue原型中',
+    '跨域问题','vuex','数据存储对象$store对象','vuex辅助函数','子模块','子模块中触发其他子模块的方法',
+    'formdata数据']
+       btn.onclick=function(){
+        var IntervalTime = (Math.random() * 100 + Math.random() * 10)  / 2
+        console.log(IntervalTime)
+        var time = setInterval(function(){
+            var a = Math.floor(Math.random() * arr.length)
+            h1.innerHTML = arr[a]
+        },IntervalTime)
+        setTimeout(function(){
+                clearInterval(time)
+        },1000)
+        
+       }
+       
+    </script>
+    
+</body>
+</html>
